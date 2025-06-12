@@ -1,11 +1,8 @@
-using System;
-using System.Threading.Tasks;
-
 class Program
 {
   public async static Task Main (string[] args)
   {
-    CryptoDealer dealer = new();
+    DealerService<DcaStrategy> dealer = new DealerService<DcaStrategy>();
     await dealer.GetAccountBalance();
   }
 }

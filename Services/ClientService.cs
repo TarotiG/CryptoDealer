@@ -1,8 +1,8 @@
-using System;
-using System.Text;
-using System.Security.Cryptography;
-using System.Threading.Tasks;
-using RestSharp;
+// using System;
+// using System.Text;
+// using System.Security.Cryptography;
+// using System.Threading.Tasks;
+// using RestSharp;
 
 public class ClientService
 {
@@ -15,8 +15,8 @@ public class ClientService
   public ClientService()
   {
     FileReader fileReader = new();
-    ApiKey = fileReader.ReadApiKey();
-    ApiSecret = fileReader.ReadApiSecret();
+    ApiKey = fileReader.ReadApiKey().Trim();
+    ApiSecret = fileReader.ReadApiSecret().Trim();
     Client = new RestClient("https://api.bitvavo.com/v2");
   }
 
@@ -24,10 +24,10 @@ public class ClientService
   {    
     // Stap 1: Bouw de pre-sign string op volgens Bitvavo-specificaties
     string preSign = timestamp + method.ToUpper() + endpoint + body;
-    Console.WriteLine(preSign);
 
     // Stap 2: Converteer secret en preSign naar byte-arrays
-    byte[] keyBytes = Encoding.UTF8.GetBytes(_apiSecret);
+    // byte[] keyBytes = Encoding.UTF8.GetBytes(_apiSecret);
+    byte[] keyBytes = Convert.FromBase64String(_apiSecret);
     byte[] messageBytes = Encoding.UTF8.GetBytes(preSign);
 
     // Stap 3: Bereken de HMAC-SHA256 hash
@@ -44,7 +44,6 @@ public class ClientService
   {
     string Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
     string Signature = ClientService.CreateSignature(ApiSecret, Timestamp, method, endpoint, body);
-    Console.WriteLine(Signature);
 
     var request = new RestRequest(endpoint, method.ToUpper() switch
     {
