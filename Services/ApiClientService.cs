@@ -4,7 +4,7 @@
 // using System.Threading.Tasks;
 // using RestSharp;
 
-public class ClientService
+public class ApiClientService
 {
   public RestClient Client { get; set; }
   private string ApiKey { get; set; }
@@ -12,7 +12,7 @@ public class ClientService
   private string Signature { get; set; }
   
 
-  public ClientService()
+  public ApiClientService()
   {
     FileReader fileReader = new();
     ApiKey = fileReader.ReadApiKey().Trim();

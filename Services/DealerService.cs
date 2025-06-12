@@ -1,6 +1,6 @@
 public class DealerService<TStrategy> where TStrategy : StrategyType
 {
-    public ClientService clientService = new();
+    public ApiClientService apiClientService = new();
     public TradingStrategy<TStrategy> Strategy { get; set; }
 
     public DealerService()
@@ -10,13 +10,13 @@ public class DealerService<TStrategy> where TStrategy : StrategyType
 
     public async Task GetAccountBalance()
     {
-        var AccountBalance = await clientService.CreateGETRequest("/balance");
+        var AccountBalance = await apiClientService.CreateGETRequest("/balance");
         Console.WriteLine(AccountBalance);
     }
 
     public async Task CreateOrder()
     {
-        var Order = await clientService.CreatePOSTRequest("/order", "{}");
+        var Order = await apiClientService.CreatePOSTRequest("/order", "{}");
         Console.WriteLine(Order);
     }
 }
