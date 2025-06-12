@@ -43,7 +43,7 @@ public class ApiClientService
   public RestRequest AuthenticateClient(string method, string endpoint, string body="")
   {
     string Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
-    string Signature = ClientService.CreateSignature(ApiSecret, Timestamp, method, endpoint, body);
+    string Signature = ApiClientService.CreateSignature(ApiSecret, Timestamp, method, endpoint, body);
 
     var request = new RestRequest(endpoint, method.ToUpper() switch
     {
