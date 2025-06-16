@@ -12,7 +12,7 @@ public class AccountService : IAccountDataProvider
 
     foreach (var asset in _account.AccountBalance)
     {
-      Console.WriteLine($"Asset: {asset.Symbol}, Available: {asset.Available}, InOrder: {asset.InOrder}");
+      Console.WriteLine($"Asset: {asset.Symbol} - \tAvailable: {asset.Available} - InOrder: {asset.InOrder}");
     }
   }
   
