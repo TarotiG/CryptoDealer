@@ -5,3 +5,5 @@ global using System.Collections.Generic;
 global using System.Security.Cryptography;
 global using System.Threading.Tasks;
 global using RestSharp;
+global using Newtonsoft.Json;
+

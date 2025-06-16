@@ -16,23 +16,20 @@ public class ApiClientService
 
     public static string CreateSignature(string _apiSecret, string timestamp, string method, string endpoint, string body = "")
     {
-        // Stap 1: Bouw de pre-sign string op volgens Bitvavo-specificaties
+        // PreSign
         string preSign = timestamp + method.ToUpper() + endpoint + body;
-        LogService.LogInfo($"PreSign: {preSign}");
 
-        // Stap 2: Converteer secret en preSign naar byte-arrays
-        // byte[] keyBytes = Encoding.UTF8.GetBytes(_apiSecret);
-        byte[] keyBytes = Convert.FromBase64String(_apiSecret);
+        // Converteer secret en preSign naar byte-arrays
+        byte[] keyBytes = Encoding.UTF8.GetBytes(_apiSecret);
         byte[] messageBytes = Encoding.UTF8.GetBytes(preSign);
 
-        // Stap 3: Bereken de HMAC-SHA256 hash
+        // HMAC-SHA256 hash
         using (var hmac = new HMACSHA256(keyBytes))
         {
             byte[] hashBytes = hmac.ComputeHash(messageBytes);
 
-            // Stap 4: Zet om naar hex-string (lowercase)
-            string signatureHex = BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
-            return Encoding.UTF8.GetString(Convert.FromBase64String(signatureHex));
+            // omzetten naar string
+            return BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
         }
     }
 
@@ -68,6 +65,10 @@ public class ApiClientService
     {
         var request = AuthenticateClient("GET", endpoint);
         var response = await Client.ExecuteAsync(request);
+        if (response.StatusCode != System.Net.HttpStatusCode.OK)
+        {
+            LogService.LogError($"Bad request; Status code: {response.StatusCode}");
+        }
         return response.Content;
     }
 
