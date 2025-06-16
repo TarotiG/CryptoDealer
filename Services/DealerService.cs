@@ -1,13 +1,15 @@
 public class DealerService<TStrategy> where TStrategy : StrategyType
 {
-    private readonly ApiClientService apiClientService = new();
-    private readonly AccountService _accountService;
+    private readonly ApiClientService _apiClientService = new();
+    private readonly AccountService _accountService = new();
+    private readonly MarketDataService _marketDataService = new();
     public TradingStrategy<TStrategy> Strategy { get; set; }
+
+    public List<MarketModel> Markets { get; set; } = new List<MarketModel>();
 
     public DealerService()
     {
         Strategy = new TradingStrategy<TStrategy>();
-        _accountService = new();
     }
 
     public async Task GetAccountBalance(Account account)
@@ -20,9 +22,24 @@ public class DealerService<TStrategy> where TStrategy : StrategyType
         await _accountService.GetTradeHistory(account);
     }
 
+    public async Task GetMarkets()
+    {
+        Markets = await _marketDataService.GetMarkets();
+    }
+
+    public async Task GetCurrentPrice(string asset)
+    {
+        await _marketDataService.GetCurrentPrice(asset);
+    }
+
+    public async Task GetCurrentPrices()
+    {
+        await _marketDataService.GetCurrentPrices();
+    }
+
     public async Task CreateOrder()
     {
-        var Order = await apiClientService.CreatePOSTRequest("/order", "{}");
+        var Order = await _apiClientService.CreatePOSTRequest("/order", "{}");
         Console.WriteLine(Order);
     }
 }

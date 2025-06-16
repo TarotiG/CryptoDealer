@@ -64,6 +64,7 @@ public class ApiClientService
     public async Task<string> CreateGETRequest(string endpoint)
     {
         var request = AuthenticateClient("GET", endpoint);
+        
         var response = await Client.ExecuteAsync(request);
         if (response.StatusCode != System.Net.HttpStatusCode.OK)
         {

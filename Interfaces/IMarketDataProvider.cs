@@ -1,9 +1,17 @@
 public interface IMarketDataProvider
 {
   /// <summary>
+  /// Geeft de lijst van markten.
+  /// </summary>
+  Task<List<MarketModel>> GetMarkets();
+  /// <summary>
   /// Geeft de huidige prijs van een asset.
   /// </summary>
-  decimal GetCurrentPrice(string asset);
+  Task GetCurrentPrice(string asset);
+  /// <summary>
+  /// Geeft de huidige prijzen van alle assets.
+  /// </summary>
+  Task GetCurrentPrices();
   /// <summary>
   /// Geeft de historische prijs van een asset op een bepaalde datum.
   /// </summary>
