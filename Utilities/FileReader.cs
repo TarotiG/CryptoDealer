@@ -7,7 +7,7 @@ public class FileReader
 
   public string ReadApiKey()
   {
-    foreach (string line in File.ReadLines(_apiFile))
+    foreach (string line in File.ReadLines(_apiFile, System.Text.Encoding.UTF8))
     {
       string[] parts = line.Split(';');
       if (parts[0] == "API_KEY")

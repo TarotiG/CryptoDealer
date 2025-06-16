@@ -10,8 +10,8 @@ public class DealerService<TStrategy> where TStrategy : StrategyType
 
     public async Task GetAccountBalance()
     {
-        var AccountBalance = await apiClientService.CreateGETRequest("/balance");
-        Console.WriteLine(AccountBalance);
+        var AccountBalance = await apiClientService.CreateGETRequest("/v2/balance");
+        LogService.LogInfo(AccountBalance);
     }
 
     public async Task CreateOrder()
