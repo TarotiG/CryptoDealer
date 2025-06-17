@@ -5,12 +5,13 @@ public class CandleData
 
 public class Candle
 {
-    public long Timestamp { get; set; }
-    public decimal Open { get; set; }
-    public decimal High { get; set; }
-    public decimal Low { get; set; }
-    public decimal Close { get; set; }
-    public decimal Volume { get; set; }
+    public string Timestamp { get; set; }
+    public string Open { get; set; }
+    public string High { get; set; }
+    public string Low { get; set; }
+    public string Close { get; set; }
+    public string Volume { get; set; }
 
-    public DateTime TimeStamp => DateTimeOffset.FromUnixTimeMilliseconds(Timestamp).UtcDateTime;
+    [JsonIgnore]
+    public DateTime TimeStamp => DateTimeOffset.FromUnixTimeMilliseconds(long.Parse(Timestamp)).UtcDateTime;
 }

@@ -6,6 +6,7 @@ public class DealerService<TStrategy> where TStrategy : StrategyType
     public TradingStrategy<TStrategy> Strategy { get; set; }
 
     public List<MarketModel> Markets { get; set; } = new List<MarketModel>();
+    public List<Candle> Candles { get; set; }
 
     public DealerService()
     {
@@ -34,7 +35,8 @@ public class DealerService<TStrategy> where TStrategy : StrategyType
 
     public async Task GetCandleData(string market, string interval, int limit=0)
     {
-        await _marketDataService.GetCandleData(market, interval, limit);
+        Candles = await _marketDataService.GetCandleData(market, interval, limit);
+        Console.WriteLine(Candles[0].TimeStamp);
     }
 
     public async Task GetCurrentPrice(string asset)

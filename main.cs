@@ -17,7 +17,6 @@ class Program
     //   await dealer.GetCurrentPrice(market.Market);
     // }
 
-    
     // await dealer.GetOrderBook("BTC-EUR");
     await dealer.GetCandleData("BTC-EUR", "5m");
     // await dealer.GetCurrentPrices();

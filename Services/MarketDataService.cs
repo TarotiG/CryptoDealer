@@ -28,14 +28,28 @@ public class MarketDataService : IMarketDataProvider
   }
 
   // VERDER UITWERKEN
-  public async Task GetCandleData(string market, string interval, int limit = 0)
+  public async Task<List<Candle>> GetCandleData(string market, string interval, int limit = 0)
   {
     string endpoint = limit == 0 ? $"/v2/{market}/candles?interval={interval}" : $"/v2/{market}/candles?interval={interval}&limit={limit}";
 
     var candleData = await _apiClientService.CreateGETRequest(endpoint);
-    // var candleJson = JsonConvert.DeserializeObject<CandleData>(candleData);
-    var candleJson = JObject.Parse(candleData);
+    var candleJson = JsonConvert.DeserializeObject<List<string[]>>(candleData);
+
+    var candles = new List<Candle>();
     
+    foreach (var candle in candleJson)
+    {
+      candles.Add(new Candle
+      {
+        Timestamp = candle[0],
+        Open = candle[1],
+        High = candle[2],
+        Low = candle[3],
+        Close = candle[4],
+        Volume = candle[5]
+      });
+    }
+    return candles;
   }
 
   public async Task GetCurrentPrice(string asset)
