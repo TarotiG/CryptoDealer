@@ -22,9 +22,9 @@ public class DealerService<TStrategy> where TStrategy : StrategyType
         await _accountService.GetTradeHistory(account);
     }
 
-    public async Task GetMarkets()
+    public async Task<List<MarketModel>> GetMarkets()
     {
-        Markets = await _marketDataService.GetMarkets();
+        return await _marketDataService.GetMarkets();
     }
 
     public async Task GetOrderBook(string market)
@@ -32,7 +32,7 @@ public class DealerService<TStrategy> where TStrategy : StrategyType
         await _marketDataService.GetOrderBook(market);
     }
 
-    public async Task GetCandleData(string market, TimeFrame interval, int limit=0)
+    public async Task GetCandleData(string market, string interval, int limit=0)
     {
         await _marketDataService.GetCandleData(market, interval, limit);
     }

@@ -9,7 +9,7 @@ public class MarketModel
   [JsonProperty]
   public string Quote { get; set; }
   [JsonProperty]
-  public string Price { get; set;}
+  public string Price { get; set; }
 }
 
 // {

@@ -11,10 +11,15 @@ class Program
     #endregion
 
     #region Market acties
-    var Markets = dealer.GetMarkets();
-    // await dealer.GetCurrentPrice("BTC-EUR");
+    // dealer.Markets = dealer.GetMarkets().Result;
+    // foreach (var market in dealer.Markets)
+    // {
+    //   await dealer.GetCurrentPrice(market.Market);
+    // }
+
+    
     // await dealer.GetOrderBook("BTC-EUR");
-    await dealer.GetCandleData("BTC-EUR", TimeFrame.FiveMinutes);
+    await dealer.GetCandleData("BTC-EUR", "5m");
     // await dealer.GetCurrentPrices();
     #endregion
   }
