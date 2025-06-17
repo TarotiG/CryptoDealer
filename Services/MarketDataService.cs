@@ -6,6 +6,7 @@ public class MarketDataService : IMarketDataProvider
   public async Task<List<MarketModel>> GetMarkets()
   {
     var marketData = await _apiClientService.CreateGETRequest("/v2/markets");
+
     foreach (var market in JsonConvert.DeserializeObject<List<MarketModel>>(marketData))
     {
       // Alleen actieve markten toevoegen
@@ -16,7 +17,30 @@ public class MarketDataService : IMarketDataProvider
       Markets.Add(market);
     }
     return Markets;
-    
+  }
+
+  public async Task GetOrderBook(string market)
+  {
+    var orderBook = await _apiClientService.CreateGETRequest($"/v2/{market}/book");
+    var orderBookJson = JsonConvert.DeserializeObject<OrderBook>(orderBook);
+    LogService.LogInfo($"Order book {orderBookJson.Market} is binnengehaald");
+  }
+
+  // VERDER UITWERKEN
+  public async Task GetCandleData(string market, TimeFrame interval, int limit = 0)
+  {
+    string endpoint = limit == 0 ? $"/v2/{market}/candles?interval={interval}" : $"/v2/{market}/candles?interval={interval}&limit={limit}";
+
+    var candleData = await _apiClientService.CreateGETRequest(endpoint);
+    var candleJson = JsonConvert.DeserializeObject<CandleData>(candleData);
+
+    foreach (var candle in candleJson.Candles)
+    {
+      for (int i = 0; i < candleJson.Candles.Count; i++)
+      {
+        Console.WriteLine(candle);
+      }
+    }
   }
 
   public async Task GetCurrentPrice(string asset)

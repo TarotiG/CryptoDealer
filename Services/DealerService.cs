@@ -27,6 +27,16 @@ public class DealerService<TStrategy> where TStrategy : StrategyType
         Markets = await _marketDataService.GetMarkets();
     }
 
+    public async Task GetOrderBook(string market)
+    {
+        await _marketDataService.GetOrderBook(market);
+    }
+
+    public async Task GetCandleData(string market, TimeFrame interval, int limit=0)
+    {
+        await _marketDataService.GetCandleData(market, interval, limit);
+    }
+
     public async Task GetCurrentPrice(string asset)
     {
         await _marketDataService.GetCurrentPrice(asset);

@@ -34,6 +34,12 @@ public class AccountService : IAccountDataProvider
   public async Task GetTradeHistory(Account _account)
   {
     var transactionData = await _apiClientService.CreateGETRequest("/v2/account/history");
-    LogService.LogInfo($"VERDER UITWERKEN, zie hieronder de rauwe data:\n\n{transactionData}");
+    var JsonTransactieData = JsonConvert.DeserializeObject<TransactionItem>(transactionData);
+
+    foreach (var item in JsonTransactieData.Items)
+    {
+      Console.WriteLine($"Adding transaction: {item.TransactionId}");
+      _account.Transactions.Add(item);
+    }
   }
 }
