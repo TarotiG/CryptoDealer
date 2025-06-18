@@ -1,0 +1,17 @@
+{
+  "market": "BTC-EUR",
+  "side": "buy",
+  "orderType": "market",
+  "operatorId": 543462,
+  "clientOrderId": "string",
+  "amount": "1.567",
+  "amountQuote": "5000",
+  "price": "6000",
+  "triggerAmount": "4000",
+  "triggerType": "price",
+  "triggerReference": "lastTrade",
+  "timeInForce": "GTC",
+  "postOnly": false,
+  "selfTradePrevention": "decrementAndCancel",
+  "responseRequired": true
+}

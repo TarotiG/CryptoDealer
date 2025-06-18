@@ -1,6 +1,6 @@
 public class DealerService<TStrategy> where TStrategy : StrategyType
 {
-    private readonly ApiClientService _apiClientService = new();
+    // private readonly ApiClientService _apiClientService = new();
     private readonly AccountService _accountService = new();
     private readonly MarketDataService _marketDataService = new();
     private readonly TradingDataService _tradingDataService = new();
@@ -64,10 +64,10 @@ public class DealerService<TStrategy> where TStrategy : StrategyType
         await _marketDataService.GetCurrentPrices();
     }
 
-    public async Task CreateOrder()
+    public async Task CreateOrder(string body)
     {
-        var Order = await _apiClientService.CreatePOSTRequest("/order", "{}");
-        Console.WriteLine(Order);
+        var order = await _tradingDataService.CreateOrder(body);
+        Console.WriteLine($"Order Id: {order.Id}");
     }
 
     #region Trading

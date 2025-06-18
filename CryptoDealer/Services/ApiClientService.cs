@@ -77,6 +77,11 @@ public class ApiClientService
     {
         var request = AuthenticateClient("POST", endpoint, body);
         var response = await Client.ExecuteAsync(request);
+
+        if (response.StatusCode != System.Net.HttpStatusCode.OK)
+        {
+            LogService.LogError($"Bad request; Status code: {response.StatusCode}");
+        }
         return response.Content;
     }
 

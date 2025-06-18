@@ -3,7 +3,7 @@ using System.IO;
 
 public class FileReader
 {
-  private readonly string _apiFile = "api.dat";
+  private readonly string _apiFile = "C:\\Users\\tgysbert\\Desktop\\CryptoDealer\\api.dat";
 
   public string ReadApiKey()
   {
