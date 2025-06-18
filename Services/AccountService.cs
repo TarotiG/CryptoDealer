@@ -31,7 +31,7 @@ public class AccountService : IAccountDataProvider
     return 0;
   }
   
-  public async Task GetTradeHistory(Account _account)
+  public async Task GetTransactionHistory(Account _account)
   {
     var transactionData = await _apiClientService.CreateGETRequest("/v2/account/history");
     var JsonTransactieData = JsonConvert.DeserializeObject<TransactionItem>(transactionData);

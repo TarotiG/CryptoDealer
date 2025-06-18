@@ -19,5 +19,5 @@ public interface IAccountDataProvider
   /// <summary>
   /// Geeft de transactiegeschiedenis van een account.
   /// </summary>
-  Task GetTradeHistory(Account account);
+  Task GetTransactionHistory(Account account);
 }

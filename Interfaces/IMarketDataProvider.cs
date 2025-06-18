@@ -1,7 +1,7 @@
 public interface IMarketDataProvider
 {
   /// <summary>
-  /// Geeft de lijst van markten.
+  /// Geeft lijst van markten.
   /// </summary>
   Task<List<MarketModel>> GetMarkets();
   /// <summary>

@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+
 class Program
 {
   public async static Task Main(string[] args)
@@ -17,8 +19,11 @@ class Program
     //   await dealer.GetCurrentPrice(market.Market);
     // }
 
-    // await dealer.GetOrderBook("BTC-EUR");
-    await dealer.GetCandleData("BTC-EUR", "5m");
+    // await dealer.GetOrderBook("BTC-EUR", 10);
+    await dealer.GetTrades("BTC-EUR", 10);
+    // await dealer.GetTickerPrice("BTC-EUR");
+    // await dealer.GetTickerPrice(null);
+    // await dealer.GetCandleData("BTC-EUR", "5m");
     // await dealer.GetCurrentPrices();
     #endregion
   }
