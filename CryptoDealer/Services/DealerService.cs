@@ -4,6 +4,7 @@ public class DealerService<TStrategy> where TStrategy : StrategyType
     private readonly AccountService _accountService = new();
     private readonly MarketDataService _marketDataService = new();
     private readonly TradingDataService _tradingDataService = new();
+    private readonly TransferDataService _transferDataService = new();
     public TradingStrategy<TStrategy> Strategy { get; set; }
     
     public int OperatorId { get; set; } = 5001;
@@ -125,6 +126,40 @@ public class DealerService<TStrategy> where TStrategy : StrategyType
             Console.WriteLine($"Order Id: {order.Id} - Market: {order.Market} - Status: {order.Status}");
         }
     }
+    #endregion
 
+    #region Tranfer
+    public async Task GetDepositData(string symbol)
+    {
+        Deposit deposit = await _transferDataService.GetDepositData(symbol);
+        Console.WriteLine($"Deposit data has been retrieved. - Address: {deposit.Address} - PaymentId: {deposit.PaymentId}");
+    }
+
+    public async Task GetDepositHistory(string symbol)
+    {
+        List<Deposit> depositHistory = await _transferDataService.GetDepositHistory(symbol);
+
+        foreach (var deposit in depositHistory)
+        {
+            Console.WriteLine($"Deposit history has been retrieved. - Address: {deposit.Address} - PaymentId: {deposit.PaymentId}");
+        }
+
+    }
+
+    public async Task WithdrawAssets(string symbol, string amount, string address)
+    {
+        Withdrawal withdrawal = await _transferDataService.WithdrawAssets(symbol, amount, address);
+        Console.WriteLine($"Withdrawal {withdrawal.PaymentId} has been created.");
+    }
+
+    public async Task GetWithdrawalHistory(string symbol)
+    {
+        List<Withdrawal> withdrawalHistory = await _transferDataService.GetWithdrawalHistory(symbol);
+
+        foreach (var withdrawal in withdrawalHistory)
+        {
+            Console.WriteLine($"Withdrawal history has been retrieved. - Address: {withdrawal.Address} - PaymentId: {withdrawal.PaymentId}");
+        }
+    }
     #endregion
 }

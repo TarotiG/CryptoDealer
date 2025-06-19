@@ -36,5 +36,12 @@ class Program
     // await dealer.GetTradeHistory("BTC-EUR");
     // await dealer.GetOrders("BTC-EUR");
     #endregion
+
+    #region Transfer
+    await dealer.GetDepositData("BTC"); // NOG TESTEN
+    // await dealer.GetDepositHistory("BTC");
+    await dealer.WithdrawAssets("BTC", "0.0001", ""); // NOG TESTEN
+    // await dealer.GetWithdrawalHistory("BTC");
+    #endregion
   }
 }
