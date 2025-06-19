@@ -66,16 +66,64 @@ public class DealerService<TStrategy> where TStrategy : StrategyType
     }
 
     #region Trading
-    public async Task GetOrder(string market, string orderId)
+    public async Task<Order> GetOrder(string market, string orderId)
     {
         var order = await _tradingDataService.GetOrder(market, orderId);
         Console.WriteLine($"Id: {order.Id} - Market: {order.Market} - Status: {order.Status}");
+        return order;
     }
 
-    public async Task CreateOrder(int operatorId)
+    public async Task<Order> CreateOrder(string market, string side, string orderType, int operatorId, string amount)
     {
-        var order = await _tradingDataService.CreateOrder(operatorId);
+        var order = await _tradingDataService.CreateOrder(market, side, orderType, operatorId, amount);
         Console.WriteLine($"Order Id: {order.Id}");
+        return order;
+    }
+
+    // TODO: Uitwerken met request body
+    public async Task UpdateOrder(Order order)
+    {
+        await _tradingDataService.UpdateOrder(order);
+        Console.WriteLine($"Order Id: {order.Id} has been updated.");
+    }
+
+    public async Task CancelOrder(string market, string orderId)
+    {
+        await _tradingDataService.CancelOrder(market, orderId);
+        Console.WriteLine($"Order Id: {orderId} has been canceled.");
+    }
+
+    public async Task GetOpenOrders(string market, string _base)
+    {
+        List<Order> orders = await _tradingDataService.GetOpenOrders(market, _base);
+        Console.WriteLine("Open orders have been retrieved.");
+
+        foreach (var order in orders)
+        {
+            Console.WriteLine($"Order Id: {order.Id} - Market: {order.Market} - Status: {order.Status}");
+        }
+    }
+
+    public async Task GetTradeHistory(string market)
+    {
+        List<Trade> trades = await _tradingDataService.GetTradeHistory(market);
+        Console.WriteLine("Trade history has been retrieved.");
+
+        foreach (var trade in trades)
+        {
+            Console.WriteLine($"Trade Id: {trade.Id} - Market: {trade.Market} - Side: {trade.Side}");
+        }
+    }
+
+    public async Task GetOrders(string market)
+    {
+        List<Order> orders = await _tradingDataService.GetOrders(market);
+        Console.WriteLine("Orders have been retrieved.");
+
+        foreach (var order in orders)
+        {
+            Console.WriteLine($"Order Id: {order.Id} - Market: {order.Market} - Status: {order.Status}");
+        }
     }
 
     #endregion

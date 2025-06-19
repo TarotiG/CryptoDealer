@@ -5,15 +5,15 @@ public interface ITradingDataProvider
     /// </summary>
     Task<Order> GetOrder(string market, string orderId);
     /// <summary>
-    /// 
+    /// Returnt een lijst met open orders
     /// </summary>
-    Task GetOpenOrders();
+    Task<List<Order>> GetOpenOrders(string market, string _base);
     /// <summary>
-    /// 
+    /// Returnt de trade history van een market
     /// </summary>
-    Task GetTradeHistory();
+    Task<List<Trade>> GetTradeHistory(string market);
     /// <summary>
-    /// 
+    /// Returnt een lijst met orders
     /// </summary>
-    Task GetOrders();
+    Task<List<Order>> GetOrders(string market);
 }

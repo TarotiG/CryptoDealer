@@ -28,8 +28,13 @@ class Program
     #endregion
 
     #region Trading
-    // await dealer.CreateOrder(dealer.OperatorId);
-    await dealer.GetOrder("SXT-EUR", "00000000-0000-05ef-0100-00015333174d");
+    // Order createdOrder = await dealer.CreateOrder("SXT-EUR", "buy", "market", dealer.OperatorId, "85");
+    // Order testOrder = await dealer.GetOrder(createdOrder.Market, createdOrder.Id);
+    // await dealer.UpdateOrder(testOrder);
+    // await dealer.CancelOrder(testOrder.Market, testOrder.Id);
+    // await dealer.GetOpenOrders(null, null);
+    // await dealer.GetTradeHistory("BTC-EUR");
+    // await dealer.GetOrders("BTC-EUR");
     #endregion
   }
 }
