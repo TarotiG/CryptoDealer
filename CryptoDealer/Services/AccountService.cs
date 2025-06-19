@@ -38,7 +38,7 @@ public class AccountService : IAccountDataProvider
 
     foreach (var item in JsonTransactieData.Items)
     {
-      Console.WriteLine($"Adding transaction: {item.TransactionId}");
+      Console.WriteLine($"Transaction date: {item.ExecutedAt} - Type: {item.Type} - Amount: {item.PriceAmount} - ReceivedCurrency: {item.ReceivedCurrency}");
       _account.Transactions.Add(item);
     }
   }

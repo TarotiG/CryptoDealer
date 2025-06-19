@@ -2,11 +2,22 @@ public class TradingDataService : ITradingDataProvider
 {
     private readonly ApiClientService _apiClientService = new();
 
-    // TODO: Bitvavo support benaderen voor mijn operatorId
-    public async Task<Order> CreateOrder(string body)
+    // TODO: Later uitbreiden met meer parameters
+    public async Task<Order> CreateOrder(int operatorId)
     {
         string endpoint = $"/v2/order";
-        var order = await _apiClientService.CreatePOSTRequest(endpoint, body);
+        
+        Order newOrder = new Order(
+            Market: "SXT-EUR",
+            Side: "buy",
+            OrderType: "market",
+            OperatorId: operatorId,
+            Amount: "85"
+        );
+
+        var orderSerialized = JsonConvert.SerializeObject(newOrder);
+        Console.WriteLine(orderSerialized);
+        var order = await _apiClientService.CreatePOSTRequest(endpoint, orderSerialized);
         var orderJson = JsonConvert.DeserializeObject<Order>(order);
 
         return orderJson;
@@ -19,6 +30,18 @@ public class TradingDataService : ITradingDataProvider
         var orderJson = JsonConvert.DeserializeObject<Order>(order);
 
         return orderJson;
+    }
+
+    public async Task CancelOrder()
+    {
+        string endpoint = "";
+        await _apiClientService.CreateGETRequest(endpoint);
+    }
+
+    public async Task UpdateOrder()
+    {
+        string endpoint = "";
+        await _apiClientService.CreateGETRequest(endpoint);
     }
 
     public async Task GetOpenOrders()

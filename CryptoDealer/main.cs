@@ -9,7 +9,7 @@ class Program
 
     #region Account acties
     // await dealer.GetAccountBalance(account);
-    // await dealer.GetTradeHistory(account);
+    // await dealer.GetTransactionHistory(account);
     #endregion
 
     #region Market acties
@@ -28,8 +28,8 @@ class Program
     #endregion
 
     #region Trading
-    await dealer.GetOrder("BTC-EUR", "ff403e21-e270-4584-bc9e-9c4b18461465");
-    // await dealer.CreateOrder("{\r\n  \"market\": \"BTC-EUR\",\r\n  \"side\": \"buy\",\r\n  \"orderType\": \"market\",\r\n  \"operatorId\": 543462,\r\n  \"clientOrderId\": \"string\",\r\n  \"amount\": \"1.567\",\r\n  \"amountQuote\": \"5000\",\r\n  \"price\": \"6000\",\r\n  \"triggerAmount\": \"4000\",\r\n  \"triggerType\": \"price\",\r\n  \"triggerReference\": \"lastTrade\",\r\n  \"timeInForce\": \"GTC\",\r\n  \"postOnly\": false,\r\n  \"selfTradePrevention\": \"decrementAndCancel\",\r\n  \"responseRequired\": true\r\n}");
+    // await dealer.CreateOrder(dealer.OperatorId);
+    await dealer.GetOrder("SXT-EUR", "00000000-0000-05ef-0100-00015333174d");
     #endregion
   }
 }

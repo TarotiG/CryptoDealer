@@ -68,8 +68,9 @@ public class ApiClientService
         var response = await Client.ExecuteAsync(request);
         if (response.StatusCode != System.Net.HttpStatusCode.OK)
         {
-            LogService.LogError($"Bad request; Status code: {response.StatusCode}");
+            LogService.LogError($"[FAILED] - Status: {response.StatusCode} - Statuscode: {response.Content}");
         }
+        
         return response.Content;
     }
 
@@ -80,7 +81,7 @@ public class ApiClientService
 
         if (response.StatusCode != System.Net.HttpStatusCode.OK)
         {
-            LogService.LogError($"Bad request; Status code: {response.StatusCode}");
+            LogService.LogError($"[FAILED] - Status: {response.StatusCode} - Statuscode: {response.Content}");
         }
         return response.Content;
     }
@@ -89,6 +90,12 @@ public class ApiClientService
     {
         var request = AuthenticateClient("PUT", endpoint, body);
         var response = await Client.ExecuteAsync(request);
+
+        if (response.StatusCode != System.Net.HttpStatusCode.OK)
+        {
+            LogService.LogError($"[FAILED] - Status: {response.StatusCode} - Statuscode: {response.Content}");
+        }
+        
         return response.Content;
     }
 
@@ -96,6 +103,12 @@ public class ApiClientService
     {
         var request = AuthenticateClient("DELETE", endpoint);
         var response = await Client.ExecuteAsync(request);
+
+        if (response.StatusCode != System.Net.HttpStatusCode.OK)
+        {
+            LogService.LogError($"[FAILED] - Status: {response.StatusCode} - Statuscode: {response.Content}");
+        }
+        
         return response.Content;
     }
 }

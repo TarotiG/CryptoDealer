@@ -17,3 +17,15 @@ channel = "stable-24_05"
 [deployment]
 run = ["dotnet", "run"]
 deploymentTarget = "cloudrun"
+
+[workflows]
+runButton = "Run C# App"
+
+[[workflows.workflow]]
+name = "Run C# App"
+author = 34378260
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd CryptoDealer && dotnet run"

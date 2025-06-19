@@ -5,7 +5,8 @@ public class DealerService<TStrategy> where TStrategy : StrategyType
     private readonly MarketDataService _marketDataService = new();
     private readonly TradingDataService _tradingDataService = new();
     public TradingStrategy<TStrategy> Strategy { get; set; }
-
+    
+    public int OperatorId { get; set; } = 5001;
     public List<MarketModel> Markets { get; set; } = new List<MarketModel>();
     public List<Candle> Candles { get; set; }
 
@@ -20,7 +21,7 @@ public class DealerService<TStrategy> where TStrategy : StrategyType
         await _accountService.GetAccountBalance(account);
     }
 
-    public async Task GetTradeHistory(Account account)
+    public async Task GetTransactionHistory(Account account)
     {
         await _accountService.GetTransactionHistory(account);
     }
@@ -64,17 +65,17 @@ public class DealerService<TStrategy> where TStrategy : StrategyType
         await _marketDataService.GetCurrentPrices();
     }
 
-    public async Task CreateOrder(string body)
-    {
-        var order = await _tradingDataService.CreateOrder(body);
-        Console.WriteLine($"Order Id: {order.Id}");
-    }
-
     #region Trading
     public async Task GetOrder(string market, string orderId)
     {
         var order = await _tradingDataService.GetOrder(market, orderId);
-        Console.WriteLine(order);
+        Console.WriteLine($"Id: {order.Id} - Market: {order.Market} - Status: {order.Status}");
+    }
+
+    public async Task CreateOrder(int operatorId)
+    {
+        var order = await _tradingDataService.CreateOrder(operatorId);
+        Console.WriteLine($"Order Id: {order.Id}");
     }
 
     #endregion
