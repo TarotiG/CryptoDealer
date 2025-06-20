@@ -1248,6 +1248,17 @@
           "System.Xml.ReaderWriter": "4.0.11",
           "System.Xml.XmlDocument": "4.0.1"
         }
+      },
+      "cryptodealer.core": {
+        "type": "Project",
+        "dependencies": {
+          "FubarCoder.RestSharp.Portable": "[3.3.0, )",
+          "FubarCoder.RestSharp.Portable.HttpClient": "[4.0.8, )",
+          "RestSharp": "[112.1.0, )",
+          "RestSharp.Newtonsoft.Json": "[1.5.1, )",
+          "RestSharp.Serializers.NewtonsoftJson": "[112.1.0, )",
+          "RestSharp.Serializers.SystemTextJson": "[106.15.0, )"
+        }
       }
     }
   }
