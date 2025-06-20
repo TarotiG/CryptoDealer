@@ -9,7 +9,7 @@ public class DealerService<TStrategy> where TStrategy : StrategyType
     
     public int OperatorId { get; set; } = 5001;
     public List<MarketModel> Markets { get; set; } = new List<MarketModel>();
-    public List<Candle> Candles { get; set; }
+    public List<Candle>? Candles { get; set; }
 
     public DealerService()
     {

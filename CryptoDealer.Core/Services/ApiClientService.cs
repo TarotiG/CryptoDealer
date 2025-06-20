@@ -3,7 +3,7 @@ public class ApiClientService
     public RestClient Client { get; set; }
     private string ApiKey { get; set; }
     private string ApiSecret { get; set; }
-    private string Signature { get; set; }
+    private string? Signature { get; set; }
 
 
     public ApiClientService()

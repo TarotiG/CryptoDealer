@@ -1,9 +1,16 @@
 public class OrderBook
 {
-    public string Market { get; set; }
+    [JsonProperty("market")]
+    public string Market { get; set; } = default!;
+
+    [JsonProperty("nonce")]
     public int Nonce { get; set; }
-    public List<decimal[]> Bids { get; set; } // [prize, size]
-    public List<decimal[]> Asks { get; set; } // [prize, size]
+
+    [JsonProperty("bids")]
+    public List<decimal[]>? Bids { get; set; } // [prize, size]
+
+    [JsonProperty("asks")]
+    public List<decimal[]>? Asks { get; set; } // [prize, size]
 
     [JsonProperty("timestamp")]
     public long TimeStampInt { get; set; }

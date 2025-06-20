@@ -3,9 +3,9 @@ using System.IO;
 
 public class FileReader
 {
-  private readonly string _apiFile = "api.dat";
+  private readonly string _apiFile = "C:\\Users\\tyron\\Source\\Repos\\CryptoDealer\\CryptoDealer.Core\\api.dat";
 
-  public string ReadApiKey()
+  public string? ReadApiKey()
   {
     foreach (string line in File.ReadLines(_apiFile, System.Text.Encoding.UTF8))
     {
@@ -18,7 +18,7 @@ public class FileReader
     return null;
   }
 
-  public string ReadApiSecret()
+  public string? ReadApiSecret()
   {
     foreach (string line in File.ReadLines(_apiFile))
     {

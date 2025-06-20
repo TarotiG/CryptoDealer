@@ -3,37 +3,46 @@ using System.Runtime.CompilerServices;
 
 public class MarketDataService : IMarketDataProvider
 {
-  private readonly ApiClientService _apiClientService = new();
+    private readonly ApiClientService _apiClientService = new();
 
-  public async Task<List<MarketModel>> GetMarkets()
-  {
-    List<MarketModel> _markets = new List<MarketModel>();
-
-    var marketData = await _apiClientService.CreateGETRequest("/v2/markets");
-    var marketDataJson = JsonConvert.DeserializeObject<List<MarketModel>>(marketData);
-
-    foreach (var market in marketDataJson)
+    public async Task<List<MarketModel>> GetMarkets()
     {
-      // Alleen actieve markten toevoegen
-      if (market.Status != "trading")
-      {
-        continue;
-      }
-      _markets.Add(market);
+        List<MarketModel> _markets = new List<MarketModel>();
+
+        var marketData = await _apiClientService.CreateGETRequest("/v2/markets");
+        List<MarketModel>? marketDataJson = JsonConvert.DeserializeObject<List<MarketModel>>(marketData);
+    
+        if (marketDataJson != null && marketDataJson.Count > 0)
+        {
+            foreach (var market in marketDataJson)
+            {
+                // Alleen actieve markten toevoegen
+                if (market.Status != "trading")
+                {
+                    continue;
+                }
+
+                _markets.Add(market);
+            }
+        }
+
+        return _markets;
     }
-    return _markets;
-  }
 
-  public async Task GetOrderBook(string market, int depth)
+  public async Task<OrderBook>? GetOrderBook(string market, int depth)
   {
-    string endpoint = depth == 0
-    ? "/v2/{market}/book"
-    : $"/v2/{market}/book?depth={depth}";
+        string endpoint = depth == 0
+        ? "/v2/{market}/book"
+        : $"/v2/{market}/book?depth={depth}";
 
-    var orderBook = await _apiClientService.CreateGETRequest(endpoint);
-    var orderBookJson = JsonConvert.DeserializeObject<OrderBook>(orderBook);
-
-    LogService.LogInfo($"Order book {orderBookJson.Market} is binnengehaald");
+        var orderBook = await _apiClientService.CreateGETRequest(endpoint);
+        OrderBook? orderBookJson = orderBook != null ? JsonConvert.DeserializeObject<OrderBook>(orderBook) : null;
+        
+        if (orderBookJson != null)
+        {
+            return orderBookJson;
+        }
+        return null;
   }
 
   // AANPASSEN params lezer verbeteren

@@ -1,5 +1,8 @@
 public class Ticker
 {
-    public string Market { get; set; }
-    public string Price { get; set; }
+    [JsonProperty("market")]
+    public string Market { get; set; } = default!;
+
+    [JsonProperty("price")]
+    public string Price { get; set; } = default!;
 }

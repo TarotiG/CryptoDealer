@@ -1,9 +1,11 @@
 public class Asset
 {
-  [JsonProperty]
-  public string Symbol { get; set; }
-  [JsonProperty]
-  public string Available { get; set; }
-  [JsonProperty]
-  public string InOrder { get; set; }
+    [JsonProperty("symbol")]
+    public string Symbol { get; set; } = default!;
+
+    [JsonProperty("available")]
+    public string Available { get; set; } = default!;
+
+    [JsonProperty("inOrder")]
+    public string InOrder { get; set; } = default!;
 }

@@ -1,15 +1,19 @@
 public class MarketModel
 {
-  [JsonProperty]
-  public string Market { get; set; }
-  [JsonProperty]
-  public string Status { get; set; }
-  [JsonProperty]
-  public string Base { get; set; }
-  [JsonProperty]
-  public string Quote { get; set; }
-  [JsonProperty]
-  public string Price { get; set; }
+    [JsonProperty("market")]
+    public string Market { get; set; } = default!;
+
+    [JsonProperty("status")]
+    public string Status { get; set; } = default!;
+
+    [JsonProperty("base")]
+    public string Base { get; set; } = default!;
+
+    [JsonProperty("quote")]
+    public string Quote { get; set; } = default!;
+
+    [JsonProperty("price")]
+    public string Price { get; set; } = default!;
 }
 
 // {

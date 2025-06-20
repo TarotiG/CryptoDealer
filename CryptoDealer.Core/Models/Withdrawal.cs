@@ -7,7 +7,7 @@ public class Withdrawal
   [JsonProperty("address")]
   public string Address { get; set; }
   [JsonProperty("paymentid")]
-  public string PaymentId { get; set; }
+  public string? PaymentId { get; set; }
   [JsonProperty("addWithdrawalFee")]
   public bool AddWithdrawalFee { get; set; }
 
