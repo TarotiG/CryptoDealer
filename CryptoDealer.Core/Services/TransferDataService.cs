@@ -1,22 +1,44 @@
+using CryptoDealer.Core.Utilities;
+using System.Collections;
+using System.Collections.Generic;
+using System.Reflection.Metadata;
+
 public class TransferDataService
 {
     private readonly ApiClientService _apiClientService = new();
 
-    public async Task<Deposit> GetDepositData(string symbol)
+    public async Task<Deposit> GetDepositData(string? symbol, int? limit, long? start, long? end)
     {
         string endpoint = $"/v2/deposit?symbol={symbol}";
+
+        EndpointBuilder _endpoint = new EndpointBuilder(
+            endpoint,
+            EndpointBuilder.ToDictionary(new
+            {
+                symbol, limit, start, end
+            })
+        );
+
         var depositData = await _apiClientService.CreateGETRequest(endpoint);
         var depositDataJson = JsonConvert.DeserializeObject<Deposit>(depositData);
         return depositDataJson;
     }
 
-    // TODO: Uitwerken met parameters
-    public async Task<List<Deposit>> GetDepositHistory(string symbol)
+    public async Task<List<Deposit>> GetDepositHistory(string? symbol, int? limit, long? start, long? end)
     {
-      string endpoint = $"/v2/depositHistory?symbol={symbol}";
-      var depositData = await _apiClientService.CreateGETRequest(endpoint);
-      var depositDataJson = JsonConvert.DeserializeObject<List<Deposit>>(depositData);
-      return depositDataJson;
+        string endpoint = $"/v2/depositHistory";
+
+        EndpointBuilder _endpoint = new EndpointBuilder(
+            endpoint,
+            EndpointBuilder.ToDictionary(new
+            { 
+                symbol, limit, start, end
+            })
+        );
+
+        var depositData = await _apiClientService.CreateGETRequest(endpoint);
+        var depositDataJson = JsonConvert.DeserializeObject<List<Deposit>>(depositData);
+        return depositDataJson;
     }
 
     public async Task<Withdrawal> WithdrawAssets(string symbol, string amount, string address)
@@ -36,11 +58,19 @@ public class TransferDataService
         return withdrawalDataJson;
     }
 
-    // TODO: Uitwerken met parameters
-    public async Task<List<Withdrawal>> GetWithdrawalHistory(string symbol)
+    public async Task<List<Withdrawal>> GetWithdrawalHistory(string? symbol, int? limit, long? start, long? end)
     {
-      string endpoint = $"/v2/withdrawalHistory?symbol={symbol}";
-      var withdrawalData = await _apiClientService.CreateGETRequest(endpoint);
+      string endpoint = $"/v2/withdrawalHistory";
+
+        EndpointBuilder _endpoint = new EndpointBuilder(
+            endpoint,
+            EndpointBuilder.ToDictionary(new
+            {
+                symbol, limit, start, end
+            })
+        );
+
+        var withdrawalData = await _apiClientService.CreateGETRequest(endpoint);
       var withdrawalDataJson = JsonConvert.DeserializeObject<List<Withdrawal>>(withdrawalData);
       
       return withdrawalDataJson;

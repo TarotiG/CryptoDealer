@@ -128,16 +128,16 @@ public class DealerService<TStrategy> where TStrategy : StrategyType
     }
     #endregion
 
-    #region Tranfer
-    public async Task GetDepositData(string symbol)
+    #region Transfer
+    public async Task GetDepositData(string? symbol, int? limit, long? start, long? end)
     {
-        Deposit deposit = await _transferDataService.GetDepositData(symbol);
+        Deposit deposit = await _transferDataService.GetDepositData(symbol, limit, start, end);
         Console.WriteLine($"Deposit data has been retrieved. - Address: {deposit.Address} - PaymentId: {deposit.PaymentId}");
     }
 
-    public async Task GetDepositHistory(string symbol)
+    public async Task GetDepositHistory(string? symbol, int? limit, long? start, long? end)
     {
-        List<Deposit> depositHistory = await _transferDataService.GetDepositHistory(symbol);
+        List<Deposit> depositHistory = await _transferDataService.GetDepositHistory(symbol, limit, start, end);
 
         foreach (var deposit in depositHistory)
         {
@@ -152,9 +152,9 @@ public class DealerService<TStrategy> where TStrategy : StrategyType
         Console.WriteLine($"Withdrawal {withdrawal.PaymentId} has been created.");
     }
 
-    public async Task GetWithdrawalHistory(string symbol)
+    public async Task GetWithdrawalHistory(string? symbol, int? limit, long? start, long? end)
     {
-        List<Withdrawal> withdrawalHistory = await _transferDataService.GetWithdrawalHistory(symbol);
+        List<Withdrawal> withdrawalHistory = await _transferDataService.GetWithdrawalHistory(symbol, limit, start, end);
 
         foreach (var withdrawal in withdrawalHistory)
         {
