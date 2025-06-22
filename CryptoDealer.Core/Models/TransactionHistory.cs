@@ -1,6 +1,18 @@
-/// <summary>
-/// Model voor een transaction
-/// </summary>
+public class TransactionHistory
+{
+    [JsonProperty("items")]
+    public List<Transaction> Items { get; set; } = new List<Transaction>();
+
+    [JsonProperty("currentPage")]
+    public int CurrentPage { get; set; }
+
+    [JsonProperty("totalPages")]
+    public int TotalPages { get; set; }
+
+    [JsonProperty("maxItems")]
+    public int MaxItems { get; set; }
+}
+
 public class Transaction
 {
     [JsonProperty("transactionId")]
@@ -39,3 +51,4 @@ public class Transaction
     [JsonProperty("address")]
     public string Address { get; set; } = default!;
 }
+

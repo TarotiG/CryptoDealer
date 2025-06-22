@@ -7,4 +7,9 @@ public abstract class StrategyType
   public TradeFrequency Frequency { get; set; }
   public float TradeAmount { get; set; }
   public List<string>? Assets { get; set; }
+
+    public void ExecuteTrade()
+    {
+        Console.WriteLine("Executing Trade...");
+    }
 }

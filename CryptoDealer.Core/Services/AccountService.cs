@@ -1,45 +1,35 @@
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
 public class AccountService : IAccountDataProvider
 {
-  private readonly ApiClientService _apiClientService = new();
-  
-  public async Task GetAccountBalance(Account _account)
-  {
-    var Data = await _apiClientService.CreateGETRequest("/v2/balance");
-    foreach (var asset in JsonConvert.DeserializeObject<List<Asset>>(Data))
+    private readonly ApiClientService _apiClientService = new();
+
+    public async Task<List<Asset>> GetAccountBalance()
     {
-      _account.AccountBalance.Add(asset);
+        var accountBalance = await _apiClientService.CreateGETRequest("/v2/balance");
+        var accountBalanceJson = JsonConvert.DeserializeObject<List<Asset>>(accountBalance);
+        return accountBalanceJson;
     }
 
-    foreach (var asset in _account.AccountBalance)
+    public decimal GetAvailableBalance()
     {
-      Console.WriteLine($"Asset: {asset.Symbol} - \tAvailable: {asset.Available} - InOrder: {asset.InOrder}");
+        return 0;
     }
-  }
   
-  public decimal GetAvailableBalance()
-  {
-    return 0;
-  }
-  
-  public decimal GetLockedBalance()
-  {
-    return 0;
-  }
-  
-  public decimal GetAccountFees()
-  {
-    return 0;
-  }
-  
-  public async Task GetTransactionHistory(Account _account)
-  {
-    var transactionData = await _apiClientService.CreateGETRequest("/v2/account/history");
-    var JsonTransactieData = JsonConvert.DeserializeObject<TransactionItem>(transactionData);
-
-    foreach (var item in JsonTransactieData.Items)
+    public decimal GetLockedBalance()
     {
-      Console.WriteLine($"Transaction date: {item.ExecutedAt} - Type: {item.Type} - Amount: {item.PriceAmount} - ReceivedCurrency: {item.ReceivedCurrency}");
-      _account.Transactions.Add(item);
+        return 0;
     }
-  }
+  
+    public decimal GetAccountFees()
+    {
+        return 0;
+    }
+  
+    public async Task<TransactionHistory> GetTransactionHistory()
+    {
+        var json = await _apiClientService.CreateGETRequest("/v2/account/history");
+        var transactionHistory = JsonConvert.DeserializeObject<TransactionHistory>(json);
+        return transactionHistory;
+    }
 }

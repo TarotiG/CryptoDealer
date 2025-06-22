@@ -10,8 +10,8 @@ namespace CryptoDealer.ConsoleApp
             DealerService<DcaStrategy> dealer = new DealerService<DcaStrategy>();
 
             #region Account acties
-            // await dealer.GetAccountBalance(account);
-            // await dealer.GetTransactionHistory(account);
+            // await dealer.GetAccountBalance();
+            // await dealer.GetTransactionHistory();
             #endregion
 
             #region Market acties

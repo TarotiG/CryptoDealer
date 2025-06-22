@@ -1,6 +1,6 @@
 public class MomentumStrategy : StrategyType
 {
-  public override void ExecuteTrade()
+  public void ExecuteTrade()
   {
     Console.WriteLine("Executing Momentum strategy...");
   }

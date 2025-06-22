@@ -3,7 +3,7 @@ public interface IAccountDataProvider
   /// <summary>
   /// Geeft de huidige balans van een account.
   /// </summary>
-  Task GetAccountBalance(Account account);
+  Task<List<Asset>> GetAccountBalance();
   /// <summary>
   /// Geeft de beschikbare balans van een account.
   /// </summary>
@@ -19,5 +19,5 @@ public interface IAccountDataProvider
   /// <summary>
   /// Geeft de transactiegeschiedenis van een account.
   /// </summary>
-  Task GetTransactionHistory(Account account);
+  Task<TransactionHistory> GetTransactionHistory();
 }

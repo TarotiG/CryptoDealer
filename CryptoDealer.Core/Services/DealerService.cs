@@ -17,14 +17,14 @@ public class DealerService<TStrategy> where TStrategy : StrategyType
     }
 
     #region Account
-    public async Task GetAccountBalance(Account account)
+    public async Task GetAccountBalance()
     {
-        await _accountService.GetAccountBalance(account);
+        await _accountService.GetAccountBalance();
     }
 
-    public async Task GetTransactionHistory(Account account)
+    public async Task GetTransactionHistory()
     {
-        await _accountService.GetTransactionHistory(account);
+        await _accountService.GetTransactionHistory();
     }
     #endregion
 

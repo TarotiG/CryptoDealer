@@ -1,4 +1,6 @@
-public class ApiClientService
+using CryptoDealer.Core.Interfaces;
+
+public class ApiClientService : IApiClient
 {
     public RestClient Client { get; set; }
     private string ApiKey { get; set; }
@@ -14,7 +16,7 @@ public class ApiClientService
         Client = new RestClient("https://api.bitvavo.com");
     }
 
-    public static string CreateSignature(string _apiSecret, string timestamp, string method, string endpoint, string body = "")
+    public string CreateSignature(string _apiSecret, string timestamp, string method, string endpoint, string body = "")
     {
         // PreSign
         string preSign = timestamp + method.ToUpper() + endpoint + body;
@@ -36,7 +38,7 @@ public class ApiClientService
     public RestRequest AuthenticateClient(string method, string endpoint, string body = "")
     {
         string Timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
-        string Signature = ApiClientService.CreateSignature(ApiSecret, Timestamp, method, endpoint, body);
+        string Signature = CreateSignature(ApiSecret, Timestamp, method, endpoint, body);
 
         var request = new RestRequest(endpoint, method.ToUpper() switch
         {
