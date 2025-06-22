@@ -1,5 +1,4 @@
-using System.Numerics;
-using System.Runtime.CompilerServices;
+using CryptoDealer.Core.Models;
 
 public class MarketDataService : IMarketDataProvider
 {
@@ -29,8 +28,8 @@ public class MarketDataService : IMarketDataProvider
         return _markets;
     }
 
-  public async Task<OrderBook>? GetOrderBook(string market, int depth)
-  {
+    public async Task<OrderBook>? GetOrderBook(string market, int depth)
+    {
         string endpoint = depth == 0
         ? "/v2/{market}/book"
         : $"/v2/{market}/book?depth={depth}";
@@ -43,74 +42,51 @@ public class MarketDataService : IMarketDataProvider
             return orderBookJson;
         }
         return null;
-  }
-
-  // AANPASSEN params lezer verbeteren
-  public async Task GetTrades(params object[] args)
-  {
-    string endpoint = "";
-    string market;
-    int? limit;
-    int? start;
-    int? end;
-    string tradeIdFrom;
-    string tradeIdTo;
-
-    switch (args.Length)
-    {
-      case 1:
-        market = (string)args[0];
-        endpoint = $"/v2/{market}/trades";
-        break;
-
-      case 2:
-        market = (string)args[0];
-        limit = (int)args[1];
-        endpoint = $"/v2/{market}/trades?limit={limit}";
-        break;
-
-      case 3:
-        market = (string)args[0];
-        limit = (int)args[1];
-        start = (int)args[2];
-        endpoint = $"/v2/{market}/trades?limit={limit}&start={start}";
-        break;
-      case 4:
-        market = (string)args[0];
-        limit = (int)args[1];
-        start = (int)args[2];
-        end = (int)args[3];
-        endpoint = $"/v2/{market}/trades?limit={limit}&start={start}&end={end}";
-        break;
-      case 5:
-        market = (string)args[0];
-        limit = (int)args[1];
-        start = (int)args[2];
-        end = (int)args[3];
-        tradeIdFrom = (string)args[4];
-        endpoint = $"/v2/{market}/trades?limit={limit}&start={start}&end={end}&tradeIdFrom={tradeIdFrom}";
-        break;
-      case 6:
-        market = (string)args[0];
-        limit = (int)args[1];
-        start = (int)args[2];
-        end = (int)args[3];
-        tradeIdFrom = (string)args[4];
-        tradeIdTo = (string)args[5];
-        endpoint = $"/v2/{market}/trades?limit={limit}&start={start}&end={end}&tradeIdFrom={tradeIdFrom}&tradeIdTo={tradeIdTo}";
-        break;
     }
 
-    var _trades = await _apiClientService.CreateGETRequest(endpoint);
-    var _tradesJson = JsonConvert.DeserializeObject<List<Trade>>(_trades);
-
-    foreach (var trade in _tradesJson)
+    public async Task<List<Trade>> GetTrades(RequestParams _params)
     {
-      Console.WriteLine($"Id: {trade.Id} - Amount: {trade.Amount} - Price: {trade.Price}");
-    }
-  }
+        string? endpoint = null;
+        string market = "";
+        var properties = typeof(RequestParams).GetProperties();
 
-  public async Task GetTickerPrices(string market)
+        List<string> queryParams = new();
+
+        foreach (var property in properties)
+        {
+            var value = property.GetValue(_params);
+            if (value == null)
+                continue;
+
+            string propName = property.Name.ToLower();
+
+            if (propName == "market")
+            {
+                market = value.ToString();
+                endpoint = $"/v2/{market}/trades";
+                continue;
+            }
+
+            if (propName == "endpoint")
+                continue;
+
+            queryParams.Add($"{propName}={value}");
+        }
+
+        if (queryParams.Count > 0)
+        {
+            endpoint += "?" + string.Join("&", queryParams);
+        }
+
+        Console.WriteLine(endpoint);
+
+        var _trades = await _apiClientService.CreateGETRequest(endpoint);
+        var _tradesJson = JsonConvert.DeserializeObject<List<Trade>>(_trades);
+
+        return _tradesJson;
+    }
+
+    public async Task GetTickerPrices(string market)
   {
     string endpoint = "";
     string _tickerPrice;

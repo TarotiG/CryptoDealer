@@ -1,3 +1,4 @@
+using CryptoDealer.Core.Models;
 using System.Threading.Tasks;
 
 namespace CryptoDealer.ConsoleApp
@@ -22,7 +23,7 @@ namespace CryptoDealer.ConsoleApp
             // }
 
             // await dealer.GetOrderBook("BTC-EUR", 10);
-            // await dealer.GetTrades("BTC-EUR", 10);
+             await dealer.GetTrades(new RequestParams("", "BTC-EUR", null, 1750438800000, 1750444130608, "0984327432", "478923055829434-03443"));
             // await dealer.GetTickerPrice("BTC-EUR");
             // await dealer.GetTickerPrice(null);
             // await dealer.GetCandleData("BTC-EUR", "5m");
@@ -41,7 +42,7 @@ namespace CryptoDealer.ConsoleApp
 
             #region Transfer
             //await dealer.GetDepositData("BTC"); // NOG TESTEN
-            await dealer.GetDepositHistory("BTC");
+            //await dealer.GetDepositHistory("BTC");
             //await dealer.WithdrawAssets("BTC", "0.0001", ""); // NOG TESTEN
             // await dealer.GetWithdrawalHistory("BTC");
             #endregion
