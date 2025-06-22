@@ -1,5 +1,3 @@
-using CryptoDealer.Core.Models;
-
 public class DealerService<TStrategy> where TStrategy : StrategyType
 {
     // private readonly ApiClientService _apiClientService = new();
@@ -41,9 +39,9 @@ public class DealerService<TStrategy> where TStrategy : StrategyType
         await _marketDataService.GetOrderBook(market, depth);
     }
 
-    public async Task GetTrades(RequestParams _params)
+    public async Task GetTrades(string endpoint, string market, int? limit, long? start, long? end, string? tradeIdFrom, string? tradeIdTo)
     {
-        await _marketDataService.GetTrades(_params);
+        await _marketDataService.GetTrades(market, limit, start, end, tradeIdFrom, tradeIdTo);
     }
 
     public async Task GetTickerPrice(string market)

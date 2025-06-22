@@ -1,4 +1,4 @@
-using CryptoDealer.Core.Models;
+using CryptoDealer.Core.Utilities;
 
 public class MarketDataService : IMarketDataProvider
 {
@@ -44,41 +44,16 @@ public class MarketDataService : IMarketDataProvider
         return null;
     }
 
-    public async Task<List<Trade>> GetTrades(RequestParams _params)
+    public async Task<List<Trade>> GetTrades(string market, int? limit, long? start, long? end, string? tradeIdFrom, string? tradeIdTo)
     {
-        string? endpoint = null;
-        string market = "";
-        var properties = typeof(RequestParams).GetProperties();
+        string endpoint = $"/v2/{market}/trades";
 
-        List<string> queryParams = new();
-
-        foreach (var property in properties)
-        {
-            var value = property.GetValue(_params);
-            if (value == null)
-                continue;
-
-            string propName = property.Name.ToLower();
-
-            if (propName == "market")
+        EndpointBuilder _endpoint = new EndpointBuilder(
+            endpoint,
+            EndpointBuilder.ToDictionary(new
             {
-                market = value.ToString();
-                endpoint = $"/v2/{market}/trades";
-                continue;
-            }
-
-            if (propName == "endpoint")
-                continue;
-
-            queryParams.Add($"{propName}={value}");
-        }
-
-        if (queryParams.Count > 0)
-        {
-            endpoint += "?" + string.Join("&", queryParams);
-        }
-
-        Console.WriteLine(endpoint);
+                limit, start, end, tradeIdFrom, tradeIdTo 
+            }));
 
         var _trades = await _apiClientService.CreateGETRequest(endpoint);
         var _tradesJson = JsonConvert.DeserializeObject<List<Trade>>(_trades);
