@@ -1,14 +1,11 @@
+/// <summary>
+/// Bevat de constructor die een instantie maakt van de TStrategy voor de trading bot.
+/// </summary>
+/// <typeparam name="TStrategy"></typeparam>
 public class TradingStrategy<TStrategy> where TStrategy : StrategyType
 {
-  private readonly TStrategy _strategy;
-
-  public TradingStrategy()
-  {
-    _strategy = Activator.CreateInstance<TStrategy>();
-  }
-
-  public void Run()
-  {
-    _strategy.ExecuteTrade();
-  }
+    public TradingStrategy()
+    {
+        Activator.CreateInstance<TStrategy>();
+    }
 }

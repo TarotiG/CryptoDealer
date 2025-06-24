@@ -75,7 +75,7 @@ public class DcaStrategy : StrategyType
         Asset? assetEUR = balance.FirstOrDefault<Asset>(item => item.Symbol == "EUR");
         decimal balanceEUR = decimal.Parse(assetEUR.Available, CultureInfo.InvariantCulture);
 
-        if (balanceEUR > 25)
+        if (balanceEUR > 10)
         {
             Investments.Add(new Investment());
             Console.WriteLine($"New Investment {Investments.Last().InvestmentId} has been created.");
