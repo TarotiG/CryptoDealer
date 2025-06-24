@@ -1,31 +1,40 @@
 using CryptoDealer.Core.Utilities;
+using System.Net;
 
 public class MarketDataService : IMarketDataProvider
 {
     private readonly ApiClientService _apiClientService = new();
 
-    public async Task<List<MarketModel>> GetMarkets()
+    public async Task<List<MarketModel>> GetMarkets(string? market)
     {
-        List<MarketModel> _markets = new List<MarketModel>();
+        List<MarketModel> activeMarkets = new List<MarketModel>();
+        string endpoint = "/v2/markets";
 
-        var marketData = await _apiClientService.CreateGETRequest("/v2/markets");
+        EndpointBuilder _endpoint = new EndpointBuilder(
+            endpoint,
+            EndpointBuilder.ToDictionary(new
+            {
+                market
+            }));
+
+        var marketData = await _apiClientService.CreateGETRequest(_endpoint._Uri);
         List<MarketModel>? marketDataJson = JsonConvert.DeserializeObject<List<MarketModel>>(marketData);
     
         if (marketDataJson != null && marketDataJson.Count > 0)
         {
-            foreach (var market in marketDataJson)
+            foreach (var _market in marketDataJson)
             {
                 // Alleen actieve markten toevoegen
-                if (market.Status != "trading")
+                if (_market.Status != "trading")
                 {
                     continue;
                 }
 
-                _markets.Add(market);
+                activeMarkets.Add(_market);
             }
         }
 
-        return _markets;
+        return activeMarkets;
     }
 
     public async Task<OrderBook>? GetOrderBook(string market, int depth)
@@ -61,33 +70,23 @@ public class MarketDataService : IMarketDataProvider
         return _tradesJson;
     }
 
-    public async Task GetTickerPrices(string market)
-  {
-    string endpoint = "";
-    string _tickerPrice;
-    List<Ticker> _tickerPricesJson;
-    Ticker _tickerPriceJson;
-
-    if (string.IsNullOrEmpty(market))
+    public async Task<List<Ticker>> GetTickerPrices()
     {
-      endpoint = "/v2/ticker/price";
-      _tickerPrice = await _apiClientService.CreateGETRequest(endpoint);
-      _tickerPricesJson = JsonConvert.DeserializeObject<List<Ticker>>(_tickerPrice);
+        string endpoint = "/v2/ticker/price";
+        string _tickerPrices= await _apiClientService.CreateGETRequest(endpoint);
+        List<Ticker> _tickerPricesJson = JsonConvert.DeserializeObject<List<Ticker>>(_tickerPrices);
 
-      foreach (var ticker in _tickerPricesJson)
-      {
-        Console.WriteLine($"Market: {ticker.Market} - Price: {ticker.Price}");
-      }
+        return _tickerPricesJson;
     }
-    else
+
+    public async Task<Ticker> GetTickerPrice(string market)
     {
-      endpoint = $"/v2/ticker/price?market={market}";
-      _tickerPrice = await _apiClientService.CreateGETRequest(endpoint);
-      _tickerPriceJson = JsonConvert.DeserializeObject<Ticker>(_tickerPrice);
+        string endpoint = $"/v2/ticker/price?market={market}";
+        string _tickerPrice = await _apiClientService.CreateGETRequest(endpoint);
+        Ticker _tickerPriceJson = JsonConvert.DeserializeObject<Ticker>(_tickerPrice);
 
-      Console.WriteLine($"Market: {_tickerPriceJson.Market} - Price: {_tickerPriceJson.Price}");
+        return _tickerPriceJson;
     }
-  }
 
   public async Task<List<Candle>> GetCandleData(string market, string interval, int limit = 0)
   {

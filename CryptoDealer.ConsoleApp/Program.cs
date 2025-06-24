@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 
 namespace CryptoDealer.ConsoleApp
@@ -6,8 +7,9 @@ namespace CryptoDealer.ConsoleApp
     {
         public async static Task Main(string[] args)
         {
-            Account account = new Account();
-            DealerService<DcaStrategy> dealer = new DealerService<DcaStrategy>();
+            #region Actieve tradingbots
+            DealerService<DcaStrategy> dealerDCA = new DealerService<DcaStrategy>();
+            #endregion
 
             #region Account acties
             // await dealer.GetAccountBalance();
@@ -22,7 +24,7 @@ namespace CryptoDealer.ConsoleApp
             // }
 
             // await dealer.GetOrderBook("BTC-EUR", 10);
-             await dealer.GetTrades("/v2/BTC-EUR/trades", "BTC-EUR", null, 1750438800000, 1750444130608, "0984327432", "478923055829434-03443");
+            //await dealer.GetTrades("/v2/BTC-EUR/trades", "BTC-EUR", null, 1750438800000, 1750444130608, "0984327432", "478923055829434-03443");
             // await dealer.GetTickerPrice("BTC-EUR");
             // await dealer.GetTickerPrice(null);
             // await dealer.GetCandleData("BTC-EUR", "5m");

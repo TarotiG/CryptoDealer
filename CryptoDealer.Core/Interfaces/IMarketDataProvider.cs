@@ -3,7 +3,7 @@ public interface IMarketDataProvider
   /// <summary>
   /// Geeft lijst van markten.
   /// </summary>
-  Task<List<MarketModel>> GetMarkets();
+  Task<List<MarketModel>> GetMarkets(string? market);
   /// <summary>
   /// Geeft de huidige prijs van een asset.
   /// </summary>

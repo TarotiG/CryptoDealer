@@ -29,9 +29,9 @@ public class DealerService<TStrategy> where TStrategy : StrategyType
     #endregion
 
     #region Market
-    public async Task<List<MarketModel>> GetMarkets()
+    public async Task<List<MarketModel>> GetMarkets(string? market)
     {
-        return await _marketDataService.GetMarkets();
+        return await _marketDataService.GetMarkets(market);
     }
 
     public async Task GetOrderBook(string market, int depth)
@@ -46,7 +46,11 @@ public class DealerService<TStrategy> where TStrategy : StrategyType
 
     public async Task GetTickerPrice(string market)
     {
-        await _marketDataService.GetTickerPrices(market);
+        await _marketDataService.GetTickerPrice(market);
+    }
+    public async Task GetTickerPrices()
+    {
+        await _marketDataService.GetTickerPrices();
     }
 
     public async Task GetCandleData(string market, string interval, int limit = 0)

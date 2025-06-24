@@ -16,7 +16,7 @@ public class TradingDataService : ITradingDataProvider
         );
 
         var orderSerialized = JsonConvert.SerializeObject(newOrder);
-        Console.WriteLine(orderSerialized);
+        //Console.WriteLine(orderSerialized);
         var order = await _apiClientService.CreatePOSTRequest(endpoint, orderSerialized);
         var orderJson = JsonConvert.DeserializeObject<Order>(order);
 
